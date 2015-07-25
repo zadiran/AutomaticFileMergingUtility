@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoMerge.Enums;
       
 namespace AutoMerge
 {
@@ -11,10 +12,10 @@ namespace AutoMerge
          * [in] second - коллекция строк модифицированного файла
          * [out] - характеристика файла
         */
-        internal static Queue<int> deepFileAnalysis(List<string> first, List<string> second)
+        internal static Queue<StringChangeType> deepFileAnalysis(List<string> first, List<string> second)
         {
             //содержит описание для каждой строки модифицированного файла
-            Queue<int> characteristics = new Queue<int>();
+            var characteristics = new Queue<StringChangeType>();
 
             //матрица состояний для каждой строки файлов строки матрицы - строки первого файла, столбцы - строки второго
             int matrixRows = first.Count;
@@ -50,7 +51,7 @@ namespace AutoMerge
                 characteristics.Clear();
                 for (int i = 0; i < second.Count; i++)
                 {
-                    characteristics.Enqueue(1);
+                    characteristics.Enqueue(StringChangeType.Added);
                 }
             }
             else
@@ -68,10 +69,10 @@ namespace AutoMerge
         }
 
         /*быстрый вариант предыдущей функции*/
-        internal static Queue<int> fastFileAnalysis(List<string> first, List<string> second)
+        internal static Queue<StringChangeType> fastFileAnalysis(List<string> first, List<string> second)
         {
             //содержит описание для каждой строки модифицированного файла
-            Queue<int> characteristics = new Queue<int>();
+            var characteristics = new Queue<StringChangeType>();
             
             //ищем 100% совпавшие строки в первый раз
             List<TwoIntFields> list = new List<TwoIntFields>();
@@ -86,7 +87,7 @@ namespace AutoMerge
                 if(first[i]==second[i])
                 {
                     list.Add(new TwoIntFields(i, i));
-                    list[list.Count - 1].type = 3;
+                    list[list.Count - 1].type = StringChangeType.NotChanged;
                 }
             }
             if (list.Count==0)
@@ -100,7 +101,7 @@ namespace AutoMerge
                         if (!isFound&&(first[i]== second[j]))
                         {
                             list.Add(new TwoIntFields(i, j));
-                            list[list.Count - 1].type = 3;
+                            list[list.Count - 1].type = StringChangeType.NotChanged;
                             lowLevel = j+1;
                             isFound = true;
                         }
@@ -144,12 +145,12 @@ namespace AutoMerge
                                 if (res == 100)
                                 {
                                     tmp.Add(new TwoIntFields(srcInd, modInd));
-                                    tmp[tmp.Count - 1].type = 3;
+                                    tmp[tmp.Count - 1].type = StringChangeType.NotChanged;
                                 }
                                 else
                                 {
                                     tmp.Add(new TwoIntFields(srcInd, modInd));
-                                    tmp[tmp.Count - 1].type = 2;
+                                    tmp[tmp.Count - 1].type = StringChangeType.Changed;
                                 }
                                 isFound = true;
                             }
@@ -162,7 +163,7 @@ namespace AutoMerge
                             srcInd = srcTmp;
                             //добавляем мод как новый
                             tmp.Add(new TwoIntFields(-1, modInd));
-                            tmp[tmp.Count - 1].type = 1;
+                            tmp[tmp.Count - 1].type = StringChangeType.Added;
                         }
 
                     }
@@ -184,12 +185,12 @@ namespace AutoMerge
                                 if (res == 100)
                                 {
                                     tmp.Add(new TwoIntFields(srcInd, modInd));
-                                    tmp[tmp.Count - 1].type = 3;
+                                    tmp[tmp.Count - 1].type = StringChangeType.NotChanged;
                                 }
                                 else
                                 {
                                     tmp.Add(new TwoIntFields(srcInd, modInd));
-                                    tmp[tmp.Count - 1].type = 2;
+                                    tmp[tmp.Count - 1].type = StringChangeType.Changed;
                                 }
                                 isFound = true;
                             }
@@ -202,14 +203,14 @@ namespace AutoMerge
                             srcInd = srcTmp;
                             //добавляем мод как новый
                             tmp.Add(new TwoIntFields(-1, modInd));
-                            tmp[tmp.Count - 1].type = 1;
+                            tmp[tmp.Count - 1].type = StringChangeType.Added;
                         }
                     }
                     else if ((srcInd>=first.Count))
                     {
                         //если в срц больше никого нет, добавляем мод в список как добавленный элемент
                         tmp.Add(new TwoIntFields(-1, modInd));
-                        tmp[tmp.Count - 1].type = 1;
+                        tmp[tmp.Count - 1].type = StringChangeType.Added;
                     }
 
                 }
@@ -242,7 +243,7 @@ namespace AutoMerge
         {
             foreach (TwoIntFields element in elements)
             {
-                element.type = 3;
+                element.type = StringChangeType.NotChanged;
             }
             List<chainOfStrings> chains = new List<chainOfStrings>();
 
@@ -250,13 +251,13 @@ namespace AutoMerge
             //если цепочек несколько, сравниваем их между собой, иначе - возвращаем единственную содержащуюся
             if (elements.Count > 1)
             {
-                while (elementWithTypeExist(3, elements))
+                while (elementWithTypeExist(StringChangeType.NotChanged, elements))
                 {
-                    int index = findElementWithType(3, elements);
+                    int index = findElementWithType(StringChangeType.NotChanged, elements);
 
                     chains.Add(new chainOfStrings());
                     chains[c].Add(elements[0]);
-                    elements[index].type = 1;
+                    elements[index].type = StringChangeType.Added;
 
                     for (int m = 0; m < elements.Count; m++)
                     {
@@ -265,7 +266,7 @@ namespace AutoMerge
                             if ((elements[m].src > chains[n].i) && (elements[m].mod > chains[n].j))
                             {
                                 chains[n].Add(elements[m]);
-                                elements[m].type = 1;
+                                elements[m].type = StringChangeType.Added;
                             }
 
                         }
@@ -315,7 +316,7 @@ namespace AutoMerge
          * [in] type - искомый тип
          * [in] list - коллекция элементов, имеющих типизацию
          * [out] - первое вхождение элемента с заданным типом*/
-        static int findElementWithType(int type, List<TwoIntFields> list)
+        static int findElementWithType(StringChangeType type, List<TwoIntFields> list)
         {
             int index = -1;
             bool isFound = false;
@@ -334,7 +335,7 @@ namespace AutoMerge
          * [in] type - искомый тип
          * [in] list - коллекция элементов, имеющих типизацию
          * [out] - признак существования элемента с искомым типом в коллекции*/
-        static bool elementWithTypeExist(int type, List<TwoIntFields> list)
+        static bool elementWithTypeExist(StringChangeType type, List<TwoIntFields> list)
         {
             bool isExist = false;
             for (int i = 0; i < list.Count; i++)
@@ -348,19 +349,15 @@ namespace AutoMerge
         }
 
         /*строит характеристику файла с точки зрения наличия в нем строк различных типов
-         * 0 - удалённая строка
-         * 1 - добавленная строка
-         * 2 - изменённая строка
-         * 3 - неизменная строка
          * [in] chain - цепочка наиболее совпадающих строк в модифицированном файле по отношению к исходному
          * [in] matrix - таблица, содержщая коэффициенты совпадения для каждой строки каждого файла
          * [in] rows - кол-во строк matrix
          * [in] cols - кол-во столбцов matrix
          * [out] - характеристика файла
          */
-        static Queue<int> makeCharacteristics(List<TwoIntFields> chain, int[,] matrix, int rows, int cols)
+        static Queue<StringChangeType> makeCharacteristics(List<TwoIntFields> chain, int[,] matrix, int rows, int cols)
         {
-            Queue<int> charact = new Queue<int>();
+            var charact = new Queue<StringChangeType>();
 
             //на основе цепочки самых соовпавших элементов строим список незаплненных диапазонов
             List<TwoRanges> ranges = new List<TwoRanges>();
@@ -596,19 +593,19 @@ namespace AutoMerge
             {
                 if (element.mod == -1)
                 {
-                    charact.Enqueue(0);
+                    charact.Enqueue(StringChangeType.Deleted);
                 }
                 else if (element.src == -1)
                 {
-                    charact.Enqueue(1);
+                    charact.Enqueue(StringChangeType.Added);
                 }
                 else if ((matrix[element.src, element.mod] >= 50) && (matrix[element.src, element.mod] < 100))
                 {
-                    charact.Enqueue(2);
+                    charact.Enqueue(StringChangeType.Changed);
                 }
                 else if (matrix[element.src, element.mod] == 100)
                 {
-                    charact.Enqueue(3);
+                    charact.Enqueue(StringChangeType.NotChanged);
                 }
             }
             

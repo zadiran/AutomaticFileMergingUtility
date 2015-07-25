@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime;
+using AutoMerge.Enums;
 
 namespace AutoMerge
 {
@@ -21,8 +22,8 @@ namespace AutoMerge
             Queue<string> stringsMod1 = new Queue<string>(mod1File.text);
             Queue<string> stringsMod2 = new Queue<string>(mod2File.text);
 
-            Queue<int> result1 = new Queue<int>();
-            Queue<int> result2 = new Queue<int>();
+            var result1 = new Queue<StringChangeType>();
+            var result2 = new Queue<StringChangeType>();
             if (type == 2)
             {
                 result1 = FileAnalysis.deepFileAnalysis(sourceFile.getText(), mod1File.getText());
@@ -33,13 +34,13 @@ namespace AutoMerge
                 result1 = FileAnalysis.fastFileAnalysis(sourceFile.getText(), mod1File.getText());
                 result2 = FileAnalysis.fastFileAnalysis(sourceFile.getText(), mod2File.getText());
             }
-            int value1 = -1;
-            int value2 = -1;
+            var value1 = StringChangeType.Unknown;
+            var value2 = StringChangeType.Unknown;
 
             bool isNeededToDequeue1 = true;
             bool isNeededToDequeue2 = true;
-            Queue<int> charact1 = new Queue<int>(result1);
-            Queue<int> charact2 = new Queue<int>(result2);
+            var charact1 = new Queue<StringChangeType>(result1);
+            var charact2 = new Queue<StringChangeType>(result2);
 
             while ((charact1.Count > 0) || (charact2.Count > 0))
             {
@@ -51,7 +52,7 @@ namespace AutoMerge
                 }
                 else if ((charact1.Count == 0) && isNeededToDequeue1)
                 {
-                    value1 = -1;
+                    value1 = StringChangeType.Unknown;
                     isNeededToDequeue1 = false;
                 }
                 if ((charact2.Count > 0) && isNeededToDequeue2)
@@ -61,31 +62,31 @@ namespace AutoMerge
                 }
                 else if ((charact2.Count == 0) && isNeededToDequeue2)
                 {
-                    value2 = -1;
+                    value2 = StringChangeType.Unknown;
                     isNeededToDequeue2 = false;
                 }
                 //если одна из очередей закончилась быстрее, чем надо
-                if ((value1 == -1) || (value2 == -1))
+                if ((value1 == StringChangeType.Unknown) || (value2 == StringChangeType.Unknown))
                 {
-                    if ((value1 == -1) && (value2 > -1))
+                    if ((value1 == StringChangeType.Unknown) && (value2 != StringChangeType.Unknown))
                     {
-                        if (value2==0)
+                        if (value2 == StringChangeType.Deleted)
                         {
                             isNeededToDequeue2 = true;
                         }
-                        else if ((stringsMod2.Count > 0) &&( (value2 == 2) || (value2 == 3) ||(value2 == 1) ))
+                        else if ((stringsMod2.Count > 0) &&( (value2 == StringChangeType.Changed) || (value2 == StringChangeType.NotChanged) ||(value2 == StringChangeType.Added) ))
                         {
                             output.text.Enqueue(stringsMod2.Dequeue());
                         }
                             isNeededToDequeue2 = true;
                     }
-                     if ((value2 == -1) && (value1 > -1))
+                     if ((value2 == StringChangeType.Unknown) && (value1 != StringChangeType.Unknown))
                     {
-                        if (value1 == 0)
+                        if (value1 == StringChangeType.Deleted)
                         {
                             isNeededToDequeue1 = true;
                         }
-                        else if ((stringsMod1.Count>0)&& ((value1 == 1) || (value1 == 2) || (value1 == 3)))
+                        else if ((stringsMod1.Count>0)&& ((value1 == StringChangeType.Added) || (value1 == StringChangeType.Changed) || (value1 == StringChangeType.NotChanged)))
                         {
                             output.text.Enqueue(stringsMod1.Dequeue());
                         }
@@ -93,9 +94,9 @@ namespace AutoMerge
                     }
                 }
                 //если среди извлеченных значений есть соответствующие добавленным строкам, записываем соответствующую строку в output и даем сигнал извлечь следующее значение
-                else if ((value1 == 1) || (value2 == 1))
+                else if ((value1 == StringChangeType.Added) || (value2 == StringChangeType.Added))
                 {
-                    if ((value1 == 1) && (value2 == 1))
+                    if ((value1 == StringChangeType.Added) && (value2 == StringChangeType.Added))
                     {
                         string str1 = stringsMod1.Dequeue();
                         string str2 = stringsMod2.Dequeue();
@@ -113,12 +114,12 @@ namespace AutoMerge
                             isNeededToDequeue2 = true;
                         }
                     }
-                    else if (value1 == 1)
+                    else if (value1 == StringChangeType.Added)
                     {
                         output.text.Enqueue(stringsMod1.Dequeue());
                         isNeededToDequeue1 = true;
                     }
-                    else if (value2 == 1)
+                    else if (value2 == StringChangeType.Added)
                     {
                         output.text.Enqueue(stringsMod2.Dequeue());
                         isNeededToDequeue2 = true;
@@ -126,35 +127,35 @@ namespace AutoMerge
                 }
                 
                 //если оба элемента удаленные, пропускаем
-                else if ((value1 == 0) && (value2 == 0))
+                else if ((value1 == StringChangeType.Deleted) && (value2 == StringChangeType.Deleted))
                 {
                     isNeededToDequeue1 = true;
                     isNeededToDequeue2 = true;
                 }
                 //если один из элементов указывает на удалённую строку, а другой на изменённую/неизменную
-                else if ((value1 == 0) || (value2 == 0))
+                else if ((value1 == StringChangeType.Deleted) || (value2 == StringChangeType.Deleted))
                 {
-                    if ((value1 == 0) && (value2 == 2) )
+                    if ((value1 == StringChangeType.Deleted) && (value2 == StringChangeType.Changed))
                     {
                         output.text.Enqueue("//Conflict: first file isn't contain this string, second - contain it changed");
                         stringsMod2.Dequeue();
                         isNeededToDequeue1 = true;
                         isNeededToDequeue2 = true;
                     }
-                    else if ((value1 == 2)  && (value2 == 0))
+                    else if ((value1 == StringChangeType.Changed)  && (value2 == StringChangeType.Deleted))
                     {
                         output.text.Enqueue("//Conflict: first file contain it changed, second - isn't contain this string");
                         stringsMod1.Dequeue();
                         isNeededToDequeue1 = true;
                         isNeededToDequeue2 = true;
                     }
-                    if ((value1 == 0) && (value2 == 3))
+                    if ((value1 == StringChangeType.Deleted) && (value2 == StringChangeType.NotChanged))
                     {
                         stringsMod2.Dequeue();
                         isNeededToDequeue1 = true;
                         isNeededToDequeue2 = true;
                     }
-                    else if ( (value1 == 3) && (value2 == 0))
+                    else if ((value1 == StringChangeType.NotChanged) && (value2 == StringChangeType.Deleted))
                     {
                         stringsMod1.Dequeue();
                         isNeededToDequeue1 = true;
@@ -162,7 +163,7 @@ namespace AutoMerge
                     }
                 }
                 //если оба элемента изменены, извлекаем их каждый из своей очереди, а в Output пишем исключение
-                else if ((value1 == 2) && (value2 == 2))
+                else if ((value1 == StringChangeType.Changed) && (value2 == StringChangeType.Changed))
                 {
                     string str1 = stringsMod1.Dequeue();
                     string str2 = stringsMod2.Dequeue();
@@ -178,14 +179,14 @@ namespace AutoMerge
                     isNeededToDequeue2 = true;
                 }
                 //если один из элементов изменён, а другой - нет, извлекаем их каждый из своей очереди, а в Output пишем исключение
-                else if ((value1 == 2) && (value2 == 3))
+                else if ((value1 == StringChangeType.Changed) && (value2 == StringChangeType.NotChanged))
                 {
                     output.text.Enqueue(stringsMod1.Dequeue());
                     stringsMod2.Dequeue();
                     isNeededToDequeue1 = true;
                     isNeededToDequeue2 = true;
                 }
-                else if ((value1 == 3) && (value2 == 2))
+                else if ((value1 == StringChangeType.NotChanged) && (value2 == StringChangeType.Changed))
                 {
                     output.text.Enqueue(stringsMod2.Dequeue());
                     stringsMod1.Dequeue();                    
@@ -193,7 +194,7 @@ namespace AutoMerge
                     isNeededToDequeue2 = true;
                 }
                 //если оба элемента не изменены, извлекаем их каждый из своей очереди, а в Output пишем один из них
-                else if ((value1 == 3) && (value2 == 3))
+                else if ((value1 == StringChangeType.NotChanged) && (value2 == StringChangeType.NotChanged))
                 {
                     output.text.Enqueue(stringsMod1.Dequeue());
                     stringsMod2.Dequeue();

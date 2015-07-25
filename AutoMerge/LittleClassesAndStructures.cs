@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMerge.Enums;
 
 namespace AutoMerge
 {
@@ -19,7 +17,7 @@ namespace AutoMerge
         }
         internal int src { get; set; }
         internal int mod { get; set; }
-        internal int type { get; set; }
+        internal StringChangeType type { get; set; }
         internal TwoIntFields(int Src, int Mod)
         {
             src = Src;
