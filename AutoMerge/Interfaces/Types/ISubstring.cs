@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoMerge.Interfaces.Types
 {
-    interface ISubstring
+    public interface ISubstring
     {
     }
 }

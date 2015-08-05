@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using AutoMerge.Interfaces.Types;
 
 namespace AutoMerge.Interfaces
 {
     public interface IMerge
     {
+        ITextFile MergeFiles(ITextFile source, IEnumerable<ITextFile> modifications);
     }
 }
