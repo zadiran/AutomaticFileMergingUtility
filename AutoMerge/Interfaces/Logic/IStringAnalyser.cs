@@ -1,6 +1,6 @@
 ﻿using AutoMerge.Interfaces.Types;
 
-namespace AutoMerge.Interfaces
+namespace AutoMerge.Interfaces.Logic
 {
     public interface IStringAnalyser
     {

@@ -54,6 +54,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DI\Supervisor.cs" />
+    <Compile Include="Interfaces\Logic\IFileAnalyser.cs" />
+    <Compile Include="Interfaces\Logic\IMerge.cs" />
+    <Compile Include="Interfaces\Logic\IStringAnalyser.cs" />
+    <Compile Include="Interfaces\Types\IStringChangeTypeSequence.cs" />
+    <Compile Include="Interfaces\Types\ISubstring.cs" />
+    <Compile Include="Interfaces\Types\ISubstringSequence.cs" />
+    <Compile Include="Interfaces\Types\ITextFile.cs" />
     <Compile Include="LittleClassesAndStructures.cs" />
     <Compile Include="Merge.cs" />
     <Compile Include="Program.cs" />
@@ -85,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMerge.Interfaces.Types;
 
-namespace AutoMerge.Interfaces
+namespace AutoMerge.Interfaces.Logic
 {
     public interface IFileAnalyser
     {
