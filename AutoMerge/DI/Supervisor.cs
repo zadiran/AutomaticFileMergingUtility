@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMerge.Interfaces.Base;
+using AutoMerge.Interfaces.Logic;
+using AutoMerge.Implementations.Default.Base;
 
 namespace AutoMerge.DI
 {
@@ -43,6 +46,7 @@ namespace AutoMerge.DI
             {
                 // Add your bindings here
                 Register<IList<int>, List<int>>();
+                Register<IProcessing, DefaultProcessing>();
             }
 
             private void Register<TI, TC>()

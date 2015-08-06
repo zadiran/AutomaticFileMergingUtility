@@ -55,6 +55,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="DI\Supervisor.cs" />
+    <Compile Include="Implementations\Default\Base\DefaultProcessing.cs" />
+    <Compile Include="Interfaces\Base\IProcessing.cs" />
     <Compile Include="Interfaces\Logic\IFileAnalyser.cs" />
     <Compile Include="Interfaces\Logic\IMerge.cs" />
     <Compile Include="Interfaces\Logic\IStringAnalyser.cs" />
@@ -94,9 +96,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
