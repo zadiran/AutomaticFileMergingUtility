@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMerge.Interfaces.Logic;
 using AutoMerge.Interfaces.Types;
-using AutoMerge.DI;
+using DI;
 
 namespace AutoMerge.Implementations.Default.Logic
 {

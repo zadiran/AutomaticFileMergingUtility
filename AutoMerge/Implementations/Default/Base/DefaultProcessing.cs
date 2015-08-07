@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMerge.Interfaces.Base;
 using AutoMerge.Interfaces.Logic;
 using AutoMerge.Interfaces.Types;
-using AutoMerge.DI;
+using DI;
 
 namespace AutoMerge.Implementations.Default.Base
 {
