@@ -39,7 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultProcessing.cs" />
+    <Compile Include="Logic\DefaultFileAnalyser.cs" />
+    <Compile Include="Logic\DefaultMerge.cs" />
+    <Compile Include="Logic\DefaultStringAnalyser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{c785c95a-131e-4d9a-b424-52acfb766a2d}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

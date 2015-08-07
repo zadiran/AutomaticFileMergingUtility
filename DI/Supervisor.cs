@@ -1,5 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Base;
+using Base.Logic;
+using Base.Types;
+using Code;
+using Code.Logic;
+using Types;
 
 namespace DI
 {
@@ -39,10 +45,15 @@ namespace DI
 
         private void Bind()
         {
-            // Add your bindings here
-            Register<IList<int>, List<int>>();
-          //  Register<IProcessing, DefaultProcessing>();
-          //  Register<IMerge, DefaultMerge>();
+            Register<IProcessing, DefaultProcessing>();
+
+            Register<IMerge, DefaultMerge>();
+            Register<IFileAnalyser, DefaultFileAnalyser>();
+            Register<IStringAnalyser, DefaultStringAnalyser>();
+
+            Register<ITextFile, DefaultTextFile>();
+            Register<IStringAnalysisResult, DefaultStringAnalysisResult>();
+            Register<IFileAnalysisResult, DefaultFileAnalysisResult>();
         }
 
         private void Register<TI, TC>()

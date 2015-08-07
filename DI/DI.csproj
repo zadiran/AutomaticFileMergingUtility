@@ -42,6 +42,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Supervisor.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{c785c95a-131e-4d9a-b424-52acfb766a2d}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Code\Code.csproj">
+      <Project>{7840c0a7-8f4e-403f-aa91-6cdcde64b820}</Project>
+      <Name>Code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Types\Types.csproj">
+      <Project>{c25d0e7d-1815-4b4a-bd0c-2f83a2d48715}</Project>
+      <Name>Types</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
