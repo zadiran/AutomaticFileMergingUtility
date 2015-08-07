@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoMerge.Interfaces.Types
 {
-    public interface IStringChangeTypeSequence
+    public interface IFileAnalysisResult
     {
     }
 }

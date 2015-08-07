@@ -9,6 +9,6 @@ namespace AutoMerge.Interfaces.Logic
 {
     public interface IFileAnalyser
     {
-        IStringChangeTypeSequence CompareFiles(ITextFile source, ITextFile modification);
+        IFileAnalysisResult CompareFiles(ITextFile source, ITextFile modification);
     }
 }

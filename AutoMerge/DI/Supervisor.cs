@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMerge.Interfaces.Base;
 using AutoMerge.Interfaces.Logic;
 using AutoMerge.Implementations.Default.Base;
+using AutoMerge.Implementations.Default.Logic;
 
 namespace AutoMerge.DI
 {
@@ -47,6 +48,7 @@ namespace AutoMerge.DI
                 // Add your bindings here
                 Register<IList<int>, List<int>>();
                 Register<IProcessing, DefaultProcessing>();
+                Register<IMerge, DefaultMerge>();
             }
 
             private void Register<TI, TC>()
