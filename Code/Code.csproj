@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C785C95A-131E-4D9A-B424-52ACFB766A2D}</ProjectGuid>
+    <ProjectGuid>{7840C0A7-8F4E-403F-AA91-6CDCDE64B820}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Base</RootNamespace>
-    <AssemblyName>Base</AssemblyName>
+    <RootNamespace>Code</RootNamespace>
+    <AssemblyName>Code</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,16 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IProcessing.cs" />
-    <Compile Include="Logic\IFileAnalyser.cs" />
-    <Compile Include="Logic\IMerge.cs" />
-    <Compile Include="Logic\IStringAnalyser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\IFileAnalysisResult.cs" />
-    <Compile Include="Types\IStringAnalysisResult.cs" />
-    <Compile Include="Types\ITextFile.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
