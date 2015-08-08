@@ -1,10 +1,11 @@
-﻿using Base;
+﻿using System.Collections.Generic;
+using Base;
 using Base.Types;
-using DI;
 
 namespace Code
 {
-    public class DefaultProcessing : IProcessing
+    public abstract class DefaultProcessing : IProcessing
     {
+        public abstract ITextFile ProcessFiles(ITextFile source, IEnumerable<ITextFile> modifications);
     }
 }

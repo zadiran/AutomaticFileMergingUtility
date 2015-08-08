@@ -4,6 +4,6 @@ namespace Base.Logic
 {
     public interface IFileAnalyser
     {
-        IFileAnalysisResult CompareFiles(ITextFile source, ITextFile modification);
+        IFileAnalysisResult CompareFiles(ITextFile first, ITextFile second);
     }
 }
