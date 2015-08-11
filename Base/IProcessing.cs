@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base.Types;
+using Base.Logic;
 
 namespace Base
 {
     public interface IProcessing
     {
-        ITextFile ProcessFiles(ITextFile source, IEnumerable<ITextFile> modifications); 
+        IFileAnalyser FileAnalyser { get; set; }
+
+        IMerge MergeComponent { get; set; }
+
+        ITextFile ProcessFiles(ITextFile source, IEnumerable<ITextFile> modifications);
     }
 }

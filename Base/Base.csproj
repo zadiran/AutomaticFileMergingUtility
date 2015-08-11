@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\StringChangeType.cs" />
     <Compile Include="IProcessing.cs" />
     <Compile Include="Logic\IFileAnalyser.cs" />
     <Compile Include="Logic\IMerge.cs" />

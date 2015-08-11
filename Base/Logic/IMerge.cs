@@ -6,6 +6,7 @@ namespace Base.Logic
 {
     public interface IMerge
     {
+        
         ITextFile MergeFiles(IDictionary<ITextFile, IFileAnalysisResult> files);
     }
 }
