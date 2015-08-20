@@ -6,7 +6,7 @@ namespace Base.Logic
 {
     public interface IStringAnalyser
     {
-        IDictionary<StringChangeType, byte> ComparisonPolicy { get; set; }
+        IStringAnalysisResult ResultPrototype { get; set; }
 
         IStringAnalysisResult CompareStrings(string first, string second);
     }

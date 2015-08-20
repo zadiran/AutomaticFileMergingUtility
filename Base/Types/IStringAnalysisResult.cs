@@ -1,13 +1,14 @@
-﻿using Base.Enums;
+﻿using System;
+using Base.Enums;
 
 namespace Base.Types
 {
     public interface IStringAnalysisResult
     {
-        bool IsEqual { get; }
+        bool IsEqual { get; set; }
 
-        StringChangeType Equality { get; }
+        byte Equality { get; set; }
 
-        double GetEqualityInPercents { get; }        
+        IStringAnalysisResult Clone { get; }
     }
 }

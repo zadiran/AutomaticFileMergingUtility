@@ -98,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{c785c95a-131e-4d9a-b424-52acfb766a2d}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DI\DI.csproj">
       <Project>{49617a3a-17b4-4bca-a439-7048e6150faf}</Project>
       <Name>DI</Name>

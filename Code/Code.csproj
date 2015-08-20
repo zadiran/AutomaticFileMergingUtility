@@ -40,6 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultProcessing.cs" />
+    <Compile Include="Logic\AuxiliaryTypes\Enums\SequenceType.cs" />
+    <Compile Include="Logic\AuxiliaryTypes\Interval.cs" />
+    <Compile Include="Logic\AuxiliaryTypes\ProjectedInterval.cs" />
+    <Compile Include="Logic\AuxiliaryTypes\SequenceOfIntervals.cs" />
+    <Compile Include="Logic\Auxiliary\SequenceOfIntervalsProcessor.cs" />
     <Compile Include="Logic\DefaultFileAnalyser.cs" />
     <Compile Include="Logic\DefaultMerge.cs" />
     <Compile Include="Logic\DefaultStringAnalyser.cs" />

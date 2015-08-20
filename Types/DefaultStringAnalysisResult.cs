@@ -1,14 +1,29 @@
-﻿using Base.Types;
+﻿using System.Collections.Generic;
+using Base.Types;
 using Base.Enums;
 
 namespace Types
 {
-    public abstract class DefaultStringAnalysisResult : IStringAnalysisResult
+    public struct DefaultStringAnalysisResult : IStringAnalysisResult
     {
-        public abstract bool IsEqual { get; }
 
-        public abstract StringChangeType Equality { get; }
+        #region properties
 
-        public abstract double GetEqualityInPercents { get; }
+        public bool IsEqual { get; set; }
+
+        public byte Equality { get; set; }
+
+        public IStringAnalysisResult Clone 
+        {
+            get 
+            {
+                var copy = this;
+                copy.IsEqual = false;
+                copy.Equality = 0;
+                return copy;
+            } 
+        }
+        
+        #endregion
     }
 }
