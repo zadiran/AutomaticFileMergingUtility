@@ -16,7 +16,7 @@ namespace Code.Logic.AuxiliaryTypes
         {
             get
             {
-                return End - Start;
+                return End - Start + 1;
             }
         }
         public Interval(int start, int end) 

@@ -12,6 +12,13 @@ namespace Code.Logic.AuxiliaryTypes
 
         public Interval ProjectedOn { get; set; }
 
+        public int Length
+        {
+            get
+            {
+                return Projected.Length;
+            }
+        }
         public ProjectedInterval(Interval projected, Interval projectedOn)
         {
             Projected = projected;
