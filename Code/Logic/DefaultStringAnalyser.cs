@@ -25,7 +25,6 @@ namespace Code.Logic
                 return result;
             }
 
-            byte equality = 0;
             var intervals = new List<ProjectedInterval>();
 
             for (int i = 0; i < first.Length; i++)
@@ -72,6 +71,7 @@ namespace Code.Logic
             {
                 result.IsEqual = false;
                 result.Equality = calculateEquality(first, second, new SequenceOfIntervalsProcessor(intervals).Longest());
+                return result;
             }
             else
             {
@@ -79,7 +79,6 @@ namespace Code.Logic
                 result.IsEqual = false;
                 return result;
             }
-            return result;
             
         }
 
