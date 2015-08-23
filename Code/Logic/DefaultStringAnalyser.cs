@@ -40,7 +40,8 @@ namespace Code.Logic
                         else
                         {
                             bool isIntervalFound = false;
-                            for (int k = 0; k < intervals.Count; k++)
+                            int m = intervals.Count;
+                            for (int k = 0; k < m; k++)
                             {
                                 if (intervals[k].Projected.End == j-1)
                                 {

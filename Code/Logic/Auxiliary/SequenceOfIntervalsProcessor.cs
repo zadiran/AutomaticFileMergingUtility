@@ -43,19 +43,22 @@ namespace Code.Logic.Auxiliary
 
                 for (int i = 0; i < Elements.Count; i++)
                 {
-                    foreach (var interval in Intervals)
+                    if (Elements[i].Type == SequenceType.Intermediate)
                     {
-                        if (Elements[i].Interval.Projected.End < interval.Projected.Start)
-	                    {
-                            if (Elements[i].Interval.ProjectedOn.End < interval.ProjectedOn.Start)
-	                        {
-		                        Elements.Add(Elements[i].Clone);
-                                Elements[i].IsModified = true;
+                        foreach (var interval in Intervals)
+                        {
+                            if (Elements[i].Interval.Projected.End < interval.Projected.Start)
+                            {
+                                if (Elements[i].Interval.ProjectedOn.End < interval.ProjectedOn.Start)
+                                {
+                                    Elements.Add(Elements[i].Clone);
+                                    Elements[i].IsModified = true;
 
-                                Elements[Elements.Count - 1].Add(interval);
-                                Elements[Elements.Count - 1].Type = SequenceType.FullAtStage;
-	                        }		 
-	                    }
+                                    Elements[Elements.Count - 1].Add(interval);
+                                    Elements[Elements.Count - 1].Type = SequenceType.FullAtStage;
+                                }
+                            }
+                        }
                     }
                 }
 

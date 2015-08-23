@@ -13,8 +13,6 @@ namespace Code.Logic.AuxiliaryTypes
     [Serializable]
     class SequenceOfIntervals : IComparable<SequenceOfIntervals>
     {
-        [NonSerialized]
-        private BinaryFormatter _formatter;
 
         public List<ProjectedInterval> Sequence { get; private set; }
 
@@ -29,8 +27,10 @@ namespace Code.Logic.AuxiliaryTypes
             get
             {
                 var ms = new MemoryStream();
-                Formatter.Serialize(ms, this);
-                return Formatter.Deserialize(ms) as SequenceOfIntervals;
+                var bf = new BinaryFormatter();
+                bf.Serialize(ms, this);
+                ms.Position = 0;
+                return (SequenceOfIntervals)bf.Deserialize(ms);
             }
         }
 
@@ -42,26 +42,14 @@ namespace Code.Logic.AuxiliaryTypes
             }
         }
 
-        private BinaryFormatter Formatter
-        {
-            get
-            {
-                if (_formatter == null)
-                {
-                    _formatter = new BinaryFormatter();
-                }
-                return _formatter;
-            }
-        }
-        private SequenceOfIntervals() { }
+        public SequenceOfIntervals() { }
 
         public SequenceOfIntervals(ProjectedInterval interval)
         {
             Sequence = new List<ProjectedInterval>();
             Sequence.Add(interval);
             Type = SequenceType.FullAtStage;
-            Interval.Projected.End = interval.Projected.End;
-            Interval.ProjectedOn.End = interval.ProjectedOn.End;
+            Interval = interval;
             IsModified = false;
         }
 

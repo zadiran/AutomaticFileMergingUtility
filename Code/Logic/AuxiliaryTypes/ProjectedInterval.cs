@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Code.Logic.AuxiliaryTypes
 {
+    [Serializable]
     public class ProjectedInterval
     {
         public Interval Projected { get; set; }
