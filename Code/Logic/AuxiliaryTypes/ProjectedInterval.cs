@@ -22,8 +22,8 @@ namespace Code.Logic.AuxiliaryTypes
         }
         public ProjectedInterval(Interval projected, Interval projectedOn)
         {
-            Projected = projected;
-            ProjectedOn = projectedOn;
+            Projected = new Interval(projected.Start, projected.End);
+            ProjectedOn = new Interval(projectedOn.Start, projectedOn.End);
         }
 
         public void PushEnd()

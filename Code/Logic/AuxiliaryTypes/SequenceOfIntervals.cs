@@ -49,7 +49,7 @@ namespace Code.Logic.AuxiliaryTypes
             Sequence = new List<ProjectedInterval>();
             Sequence.Add(interval);
             Type = SequenceType.FullAtStage;
-            Interval = interval;
+            Interval = new ProjectedInterval(interval.Projected, interval.ProjectedOn);
             IsModified = false;
         }
 

@@ -35,8 +35,8 @@ namespace Code.Logic.Auxiliary
                     if (element.Type == SequenceType.FullAtStage)
                     {
                         element.Type = SequenceType.Intermediate;
-                        element.IsModified = false;
                     }
+                    element.IsModified = false;
                 }
 
                 Elements.Sort();

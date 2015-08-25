@@ -12,13 +12,13 @@ namespace Code.Logic
     {
         public IStringAnalysisResult ResultPrototype { get; set; }
         
-        public IStringAnalysisResult CompareStrings(string first, string second)
+        public IStringAnalysisResult CompareStrings(string source, string mod)
         {
             var result = ResultPrototype.Clone;
 
-            first = first.Trim(' ', '\t');
-            second = second.Trim(' ', '\t');
-            if (first == second)
+            source = source.Trim(' ', '\t');
+            mod = mod.Trim(' ', '\t');
+            if (source == mod)
             {
                 result.IsEqual = true;
                 result.Equality = 100;
@@ -27,43 +27,18 @@ namespace Code.Logic
 
             var intervals = new List<ProjectedInterval>();
 
-            for (int i = 0; i < first.Length; i++)
+            for (int i = 0; i < source.Length; i++)
             {
-                for (int j = 0; j < second.Length; j++)
+                for (int j = 0; j < mod.Length; j++)
                 {
-                    if (first[i] == second[j])
+                    if (source[i] == mod[j])
                     {
-                        if (j == 0)
+                        int k = 0;
+                        while (i + k < source.Length && j + k < mod.Length && source[i + k] == mod[j + k])
                         {
-                            intervals.Add(new ProjectedInterval(new Interval(j,j), new Interval(i,i)));
+                            k++;
                         }
-                        else
-                        {
-                            bool isIntervalFound = false;
-                            int m = intervals.Count;
-                            for (int k = 0; k < m; k++)
-                            {
-                                if (intervals[k].Projected.End == j-1)
-                                {
-                                    isIntervalFound = true;
-                                    if (intervals[k].ProjectedOn.End != first.Length - 1 
-                                        && intervals[k].Projected.End != second.Length -1
-                                        && second[j - 1] == first[intervals[k].ProjectedOn.End]
-                                        && second[j] == first[intervals[k].ProjectedOn.End + 1])
-                                    {
-                                        intervals[k].PushEnd();
-                                    }
-                                }
-                                else
-                                {
-                                    intervals.Add(new ProjectedInterval(new Interval(j, j), new Interval(i, i)));
-                                }
-                            }
-                            if (!isIntervalFound)
-                            {
-                                intervals.Add(new ProjectedInterval(new Interval(j,j), new Interval(i,i)));
-                            }
-                        }
+                        intervals.Add(new ProjectedInterval(new Interval(j, j + k - 1), new Interval(i, i + k - 1)));
                     }
                 }
             }
@@ -71,7 +46,7 @@ namespace Code.Logic
             if (intervals.Count > 0)
             {
                 result.IsEqual = false;
-                result.Equality = calculateEquality(first, second, new SequenceOfIntervalsProcessor(intervals).Longest());
+                result.Equality = calculateEquality(source, mod, new SequenceOfIntervalsProcessor(intervals).Longest());
                 return result;
             }
             else
@@ -83,7 +58,7 @@ namespace Code.Logic
             
         }
 
-        private byte calculateEquality(string first, string second, IList<ProjectedInterval> intervals)
+        private byte calculateEquality(string source, string mod, IList<ProjectedInterval> intervals)
         {
             int intervalLength = 0;
             foreach (var interval in intervals)
@@ -91,10 +66,12 @@ namespace Code.Logic
                 intervalLength += interval.Length;
             }
 
-            int percentOfSymbols = (int)(100 * intervalLength / first.Length);
-            int percentOfAddedSymbols = (int)(100 * (second.Length - intervalLength) / second.Length);
-
-            return (byte)(percentOfSymbols - percentOfAddedSymbols / 10);
+           
+            int percentOfSymbols = (int)(100 * intervalLength / source.Length);
+            int percentOfAddedSymbols = (int)(100 * (mod.Length - intervalLength) / mod.Length);
+            int percentOfDeletedSymbols = (int)(100 * (source.Length - intervalLength)/ source.Length);
+            
+            return (byte)(percentOfSymbols - percentOfAddedSymbols / 10 - percentOfDeletedSymbols / 10 );
 
         }
     }

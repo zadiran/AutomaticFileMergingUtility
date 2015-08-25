@@ -44,7 +44,7 @@ namespace DefaultImplementationTestsProject
             analyser.ResultPrototype = new DefaultStringAnalysisResult();
 
             var expected = new DefaultStringAnalysisResult();
-            expected.Equality = 80;
+            expected.Equality = 78;
             expected.IsEqual = false;
 
             var actual = analyser.CompareStrings("12345", "1234");
@@ -59,7 +59,7 @@ namespace DefaultImplementationTestsProject
             analyser.ResultPrototype = new DefaultStringAnalysisResult();
 
             var expected = new DefaultStringAnalysisResult();
-            expected.Equality = 80;
+            expected.Equality = 78;
             expected.IsEqual = false;
 
             var actual = analyser.CompareStrings("12345", "2345");
@@ -74,7 +74,7 @@ namespace DefaultImplementationTestsProject
             analyser.ResultPrototype = new DefaultStringAnalysisResult();
 
             var expected = new DefaultStringAnalysisResult();
-            expected.Equality = 80;
+            expected.Equality = 78;
             expected.IsEqual = false;
 
             var actual = analyser.CompareStrings("12345", "1345");
