@@ -68,9 +68,9 @@ namespace Code.Logic
 
            
             int percentOfSymbols = (int)(100 * intervalLength / source.Length);
-            int percentOfAddedSymbols = (int)(100 * (mod.Length - intervalLength) / mod.Length);
+            int percentOfAddedSymbols = (int)(100 * (mod.Length - intervalLength) / source.Length);
             int percentOfDeletedSymbols = (int)(100 * (source.Length - intervalLength)/ source.Length);
-            
+
             return (byte)(percentOfSymbols - percentOfAddedSymbols / 10 - percentOfDeletedSymbols / 10 );
 
         }
