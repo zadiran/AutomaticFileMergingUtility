@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Code.Logic;
 using Types;
@@ -214,6 +215,22 @@ namespace DefaultImplementationTestsProject
 
             var actual = analyser.CompareStrings("12345678901234567890", "126s7r80ygf1h2hseff3sdg78ddsd");
 
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ManyAdditionsAndDeletions4()
+        {
+            var analyser = new DefaultStringAnalyser();
+            analyser.ResultPrototype = new DefaultStringAnalysisResult();
+
+            var expected = new DefaultStringAnalysisResult();
+            expected.Equality = 69;
+            expected.IsEqual = false;
+
+            var actual = analyser.CompareStrings("12345678901234567890", "12364355234234782390132424354825479");
+
+            
             Assert.AreEqual(expected, actual);
         }
     }

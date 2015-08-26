@@ -46,7 +46,7 @@ namespace Code.Logic
             if (intervals.Count > 0)
             {
                 result.IsEqual = false;
-                result.Equality = calculateEquality(source, mod, new SequenceOfIntervalsProcessor(intervals).Longest());
+                result.Equality = calculateEquality(source, mod, new SequenceOfIntervalsProcessor(intervals).Longest(mod.Length));
                 return result;
             }
             else

@@ -26,7 +26,7 @@ namespace Code.Logic.Auxiliary
             Initialize(intervals);
         }
 
-        public IList<ProjectedInterval> Longest()
+        public IList<ProjectedInterval> Longest(int maxLength)
         {
             while (Elements.Any(x => x.Type == SequenceType.FullAtStage))
             {
@@ -39,7 +39,34 @@ namespace Code.Logic.Auxiliary
                     element.IsModified = false;
                 }
 
+                var longestAtStage = selectLongest(Elements).Length;
+                var toDelete = new List<int>();
+                for (int e = 0; e < Elements.Count; e++)
+                {
+                    if (Elements[e].Length + maxLength - Elements[e].Interval.Projected.End < longestAtStage) 
+                    {
+                        Elements.RemoveAt(e);
+                        if (e > 0)
+                        {
+                            e--;
+                        }
+                    } 
+                }
                 Elements.Sort();
+                // this code make algorythm twice slower, but give minimal profit
+                //for (int e = 0; e < Elements.Count-1; e++)
+                //{
+                //    for (int f = e + 1; f < Elements.Count; f++)
+                //    {
+                //        if (Elements[e].Interval.Projected.End - Elements[f].Interval.Projected.Start == 1
+                //            && Elements[e].Interval.ProjectedOn.End - Elements[f].Interval.ProjectedOn.Start == 1)
+                //        {
+                //            Elements[e].Interval.Projected.End = Elements[f].Interval.Projected.End;
+                //            Elements[e].Interval.ProjectedOn.End = Elements[f].Interval.ProjectedOn.End;
+                //            Elements.RemoveAt(f);
+                //        }   
+                //    }
+                //}
 
                 for (int i = 0; i < Elements.Count; i++)
                 {
@@ -61,7 +88,6 @@ namespace Code.Logic.Auxiliary
                         }
                     }
                 }
-
                 foreach (var element in Elements)
 	            {
 		            if (element.Type == SequenceType.Intermediate)
