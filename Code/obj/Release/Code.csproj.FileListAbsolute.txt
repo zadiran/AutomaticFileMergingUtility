@@ -1,0 +1,7 @@
+D:\Projects\Public\AutoMerge\Code\bin\Release\Code.dll
+D:\Projects\Public\AutoMerge\Code\bin\Release\Code.pdb
+D:\Projects\Public\AutoMerge\Code\obj\Release\Code.csprojResolveAssemblyReference.cache
+D:\Projects\Public\AutoMerge\Code\obj\Release\Code.dll
+D:\Projects\Public\AutoMerge\Code\obj\Release\Code.pdb
+D:\Projects\Public\AutoMerge\Code\bin\Release\Base.dll
+D:\Projects\Public\AutoMerge\Code\bin\Release\Base.pdb
