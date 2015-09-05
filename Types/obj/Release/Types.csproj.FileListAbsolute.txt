@@ -1,7 +1,0 @@
-D:\Projects\Public\AutoMerge\Types\bin\Release\Types.dll
-D:\Projects\Public\AutoMerge\Types\bin\Release\Types.pdb
-D:\Projects\Public\AutoMerge\Types\obj\Release\Types.csprojResolveAssemblyReference.cache
-D:\Projects\Public\AutoMerge\Types\obj\Release\Types.dll
-D:\Projects\Public\AutoMerge\Types\obj\Release\Types.pdb
-D:\Projects\Public\AutoMerge\Types\bin\Release\Base.dll
-D:\Projects\Public\AutoMerge\Types\bin\Release\Base.pdb

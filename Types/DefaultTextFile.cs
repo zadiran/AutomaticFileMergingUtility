@@ -2,7 +2,7 @@
 
 namespace Types
 {
-    public abstract class DefaultTextFile //: ITextFile
+    public class DefaultTextFile : ITextFile
     {
     }
 }
